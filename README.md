@@ -1,76 +1,90 @@
 # VGX Skills
 
-> © 2026 VGX Global Consulting (OPC) Pvt Ltd. All rights reserved.
+Agent Skills for [Claude Code](https://claude.com/claude-code) and the Claude desktop app, built by [VGX Global Consulting](https://vgx.digital). Install once, use in every project and every chat.
 
-Claude Code skills by VGX Global Consulting. Install once, use across every project.
+[![License](https://img.shields.io/badge/license-Proprietary-lightgrey)](#license)
 
 ---
 
-## Install
+## What's inside
 
-### Mac / Linux
+| Skill | Invoke with | What it does |
+|---|---|---|
+| **vgx-pfix** | `/vgx-pfix` or *"fix my prompt"* | Diagnoses a developer prompt against the VGX 5-Part Formula (Context, Existing Code, Request, Constraints, Output Format), flags the 10 common prompting traps, and rewrites the prompt to fix every issue found. |
+
+More skills ship as the VGX masterclass curriculum grows — see [Updating](#updating).
+
+---
+
+## Quick start
+
+Pick the install path that matches how you use Claude.
+
+### Claude Code (CLI / VS Code extension)
+
+**Mac / Linux**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/VGXDigital/vgx-skills/main/install.sh | bash
 ```
 
-### Windows
-
-Open PowerShell and paste:
+**Windows (PowerShell)**
 
 ```powershell
 irm https://raw.githubusercontent.com/VGXDigital/vgx-skills/main/install.ps1 | iex
 ```
 
-No git required — the script downloads the current skills straight from GitHub and installs them.
+No git clone needed — the installer fetches each skill file directly from GitHub and drops it into `~/.claude/skills/`. Restart Claude Code (or reload the VS Code window) afterwards.
 
-Restart Claude Code after install (or reload the VS Code window).
+### Claude desktop app
 
-### Claude Desktop app (claude.ai app)
+The desktop app manages skills through its own UI, not a local folder — skills are added as a `.zip` upload.
 
-The desktop app uses a different Skills mechanism than Claude Code — no `~/.claude/skills/` folder, no auto-pickup from disk. Skills are uploaded as a `.zip` through the UI.
+1. Download **[vgx-pfix.zip](https://github.com/VGXDigital/vgx-skills/raw/main/dist/vgx-pfix.zip)**
+2. In the app, go to **Settings → Capabilities → Skills → Upload skill** and select the file
+3. That's it — no restart required, the skill is ready in your next chat or Project
 
-1. Download the skill zip: [`dist/vgx-pfix.zip`](https://github.com/VGXDigital/vgx-skills/raw/main/dist/vgx-pfix.zip)
-2. In the desktop app: **Settings → Capabilities → Skills → Upload skill** → select the zip
-3. No restart needed — the skill is available in your next chat/Project
-
-Zips are rebuilt automatically whenever a skill changes (see `.github/workflows/build-zips.yml`). Re-download and re-upload to update.
+Each skill in this repo has its own ready-to-upload zip in [`dist/`](dist/), rebuilt automatically whenever the skill's source changes.
 
 ---
 
 ## Updating
 
-The installer overwrites existing skills — just re-run the same one-liner from above.
+**Claude Code:** re-run the install command above — it overwrites existing skills with the latest version.
 
----
-
-## Skills
-
-| Skill | Invoke | What it does |
-|---|---|---|
-| `vgx-pfix` | `/vgx-pfix` or *"fix my prompt"* | Diagnoses a developer prompt against the 5-Part Formula. Scores each part (Context, Existing Code, Request, Constraints, Output Format), flags the 10 prompting traps, gives a verdict, and rewrites the prompt to fix every issue. |
+**Desktop app:** re-download the zip from `dist/` and upload it again to replace the old version.
 
 ---
 
 ## How it works
 
-Skills install to `~/.claude/skills/` on Mac/Linux and `%USERPROFILE%\.claude\skills\` on Windows. Claude Code picks them up automatically — no config needed.
+- **Claude Code** reads skills straight from disk: `~/.claude/skills/` on Mac/Linux, `%USERPROFILE%\.claude\skills\` on Windows. Each skill is a folder containing a `SKILL.md` file (plus any reference files it needs), and Claude Code picks it up automatically — no configuration required.
+- **Claude desktop app** doesn't read from disk. Skills are packaged as zips and uploaded through Settings, which is why this repo also publishes a prebuilt zip per skill.
 
-Each skill is a single `SKILL.md` file. To inspect what a skill does before running it:
-
-```
-~/.claude/skills/vgx-pfix/SKILL.md
-```
+Want to see exactly what a skill does before you run it? Every `SKILL.md` is plain markdown — read it in this repo under `skills/<name>/SKILL.md`, or after install at `~/.claude/skills/<name>/SKILL.md`.
 
 ---
 
-## For course instructors
+## Requirements
 
-This repo is the distribution point for VGX masterclass skills. To add a new skill:
+- Claude Code (any recent version) **or** the Claude desktop app with the Skills capability enabled
+- Mac, Linux, or Windows — no git, no package manager
 
-1. Create `skills/<skill-name>/SKILL.md` (and any reference files it needs)
-2. Add a `mkdir`/`curl` (or `New-Item`/`Invoke-WebRequest`) line per file to install.sh and install.ps1
-3. Add a row to the Skills table above
-4. Commit and push — participants re-run the installer to get it
+---
 
-Skills are scoped to the user's machine (global install), so they work in any project the participant opens in Claude Code.
+## Contributing (VGX masterclass instructors)
+
+This repo is the distribution point for VGX masterclass skills. To publish a new one:
+
+1. Create `skills/<skill-name>/SKILL.md` (plus any `references/` files it needs)
+2. Add a matching `mkdir`/`curl` (or `New-Item`/`Invoke-WebRequest`) block to `install.sh` and `install.ps1`
+3. Add a row to the [skills table](#whats-inside) above
+4. Commit and push to `main`
+
+Pushing changes under `skills/**` automatically rebuilds and commits the corresponding zip in `dist/` via GitHub Actions — no manual packaging step. Claude Code participants pick up the change by re-running the installer; desktop app users by re-downloading and re-uploading the zip.
+
+---
+
+## License
+
+© 2026 VGX Global Consulting (OPC) Private Limited. All rights reserved.
