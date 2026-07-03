@@ -25,10 +25,12 @@ jobs:
             (cd skills && zip -r "../dist/${name}.zip" "$name" -x '.*')
           done
 
-      - name: Commit zips
+      - name: Publish zips to the "latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dist/
-          git diff --cached --quiet || git commit -m "chore: rebuild skill zips"
-          git push
+          gh release view latest --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create latest --repo "$GITHUB_REPOSITORY" \
+              --title "Latest skill zips" \
+              --notes "Auto-built desktop-app skill zips. Always reflects the current main branch."
+          gh release upload latest dist/*.zip --repo "$GITHUB_REPOSITORY" --clobber

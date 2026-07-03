@@ -40,11 +40,11 @@ No git clone needed — the installer fetches each skill file directly from GitH
 
 The desktop app manages skills through its own UI, not a local folder — skills are added as a `.zip` upload.
 
-1. Download **[vgx-pfix.zip](https://github.com/VGXDigital/vgx-skills/raw/main/dist/vgx-pfix.zip)**
+1. Download **[vgx-pfix.zip](https://github.com/VGXDigital/vgx-skills/releases/latest/download/vgx-pfix.zip)**
 2. In the app, go to **Settings → Capabilities → Skills → Upload skill** and select the file
 3. That's it — no restart required, the skill is ready in your next chat or Project
 
-Each skill in this repo has its own ready-to-upload zip in [`dist/`](dist/), rebuilt automatically whenever the skill's source changes.
+Each skill has its own ready-to-upload zip attached to the [`latest` release](https://github.com/VGXDigital/vgx-skills/releases/tag/latest), rebuilt automatically whenever the skill's source changes.
 
 ---
 
@@ -52,14 +52,14 @@ Each skill in this repo has its own ready-to-upload zip in [`dist/`](dist/), reb
 
 **Claude Code:** re-run the install command above — it overwrites existing skills with the latest version.
 
-**Desktop app:** re-download the zip from `dist/` and upload it again to replace the old version.
+**Desktop app:** re-download the zip from the [`latest` release](https://github.com/VGXDigital/vgx-skills/releases/tag/latest) and upload it again to replace the old version.
 
 ---
 
 ## How it works
 
 - **Claude Code** reads skills straight from disk: `~/.claude/skills/` on Mac/Linux, `%USERPROFILE%\.claude\skills\` on Windows. Each skill is a folder containing a `SKILL.md` file (plus any reference files it needs), and Claude Code picks it up automatically — no configuration required.
-- **Claude desktop app** doesn't read from disk. Skills are packaged as zips and uploaded through Settings, which is why this repo also publishes a prebuilt zip per skill.
+- **Claude desktop app** doesn't read from disk. Skills are packaged as zips and uploaded through Settings, which is why this repo also publishes a prebuilt zip per skill as a [GitHub release](https://github.com/VGXDigital/vgx-skills/releases/tag/latest) rather than committing binaries to the repo.
 
 Want to see exactly what a skill does before you run it? Every `SKILL.md` is plain markdown — read it in this repo under `skills/<name>/SKILL.md`, or after install at `~/.claude/skills/<name>/SKILL.md`.
 
@@ -81,7 +81,7 @@ This repo is the distribution point for VGX masterclass skills. To publish a new
 3. Add a row to the [skills table](#whats-inside) above
 4. Commit and push to `main`
 
-Pushing changes under `skills/**` automatically rebuilds and commits the corresponding zip in `dist/` via GitHub Actions — no manual packaging step. Claude Code participants pick up the change by re-running the installer; desktop app users by re-downloading and re-uploading the zip.
+Pushing changes under `skills/**` automatically rebuilds the corresponding zip and publishes it to the `latest` GitHub release via Actions — no manual packaging step, nothing binary committed to the repo. Claude Code participants pick up the change by re-running the installer; desktop app users by re-downloading and re-uploading the zip.
 
 ---
 
