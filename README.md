@@ -26,6 +26,16 @@ No git required — the script downloads the current skills straight from GitHub
 
 Restart Claude Code after install (or reload the VS Code window).
 
+### Claude Desktop app (claude.ai app)
+
+The desktop app uses a different Skills mechanism than Claude Code — no `~/.claude/skills/` folder, no auto-pickup from disk. Skills are uploaded as a `.zip` through the UI.
+
+1. Download the skill zip: [`dist/vgx-pfix.zip`](https://github.com/VGXDigital/vgx-skills/raw/main/dist/vgx-pfix.zip)
+2. In the desktop app: **Settings → Capabilities → Skills → Upload skill** → select the zip
+3. No restart needed — the skill is available in your next chat/Project
+
+Zips are rebuilt automatically whenever a skill changes (see `.github/workflows/build-zips.yml`). Re-download and re-upload to update.
+
 ---
 
 ## Updating

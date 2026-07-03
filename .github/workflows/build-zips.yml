@@ -1,0 +1,34 @@
+# (c) 2026 VGX Global Consulting (OPC) Pvt Ltd. All rights reserved.
+name: Build skill zips
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build zip per skill
+        run: |
+          mkdir -p dist
+          for dir in skills/*/; do
+            name=$(basename "$dir")
+            (cd skills && zip -r "../dist/${name}.zip" "$name" -x '.*')
+          done
+
+      - name: Commit zips
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist/
+          git diff --cached --quiet || git commit -m "chore: rebuild skill zips"
+          git push
