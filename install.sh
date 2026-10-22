@@ -4,7 +4,7 @@
 # Fetches each skill file directly from GitHub. No git binary or clone required.
 
 set -euo pipefail
-BASE="https://raw.githubusercontent.com/VGXDigital/vgx-skills/main/skills"
+BASE="https://raw.githubusercontent.com/VGXDigital/claude-skills/main/skills"
 DEST="$HOME/.claude/skills"
 
 echo "VGX Claude Masterclass - Skill Installer"

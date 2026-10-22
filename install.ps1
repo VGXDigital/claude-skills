@@ -3,7 +3,7 @@
 # Fetches each skill file directly from GitHub. No git binary or clone required.
 
 $ErrorActionPreference = "Stop"
-$Base = "https://raw.githubusercontent.com/VGXDigital/vgx-skills/main/skills"
+$Base = "https://raw.githubusercontent.com/VGXDigital/claude-skills/main/skills"
 $Dest = Join-Path $env:USERPROFILE ".claude\skills"
 
 Write-Host "VGX Claude Masterclass - Skill Installer"
